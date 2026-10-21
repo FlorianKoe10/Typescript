@@ -50,6 +50,13 @@ export class Album {
         if (index !== -1) {
             this._Songs.splice(index, 1);
             song.clearAlbum(this);
+            for (const person of song.kuenstler) {
+                person.removeSong(song);
+            }
+            const songIndex = songs.indexOf(song);
+            if (songIndex !== -1) {
+                songs.splice(songIndex, 1);
+            }
         }
     }
 

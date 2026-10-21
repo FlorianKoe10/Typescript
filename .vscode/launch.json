@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Deno: Run Current File",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "C:\\app\\Test\\deno",
+      "runtimeExecutable": "C:\\app\\Typescript\\deno",
       "runtimeArgs": ["run", "-A", "--inspect-wait"],
       "args": ["${file}"],
       "outputCapture": "std",

@@ -1,8 +1,8 @@
 import { alben } from "./Album/Album.ts";
-import { songs } from "./Song/Song.ts";
+import type { Song } from "./Song/Song.ts";
 
 function passtZurSuche(
-    song: (typeof songs)[number],
+    song: Song,
     suchbegriff: string,
 ): boolean {
     const suchtext = suchbegriff.trim().toLocaleLowerCase();
@@ -14,15 +14,10 @@ function passtZurSuche(
 }
 
 function suchen(suchbegriff: string): void {
-    if (suchbegriff.trim() === "") {
-        console.log("Bitte einen Suchbegriff eingeben.");
-        return;
-    }
-
-    const treffer = songs.filter((song) => passtZurSuche(song, suchbegriff));
-
     for (const album of alben) {
-        const albumTreffer = treffer.filter((song) => song.album === album);
+        const albumTreffer = album.songs.filter((song) =>
+            passtZurSuche(song, suchbegriff)
+        );
         if (albumTreffer.length > 0) {
             console.log("Album:");
             album.printdata();
@@ -34,28 +29,6 @@ function suchen(suchbegriff: string): void {
     }
 }
 
-function loeschen(suchbegriff: string): void {
-    if (suchbegriff.trim() === "") {
-        console.log("Bitte einen Suchbegriff eingeben.");
-        return;
-    }
 
-    const zuLoeschen = songs.filter((song) =>
-        passtZurSuche(song, suchbegriff)
-    );
-    for (const song of zuLoeschen) {
-        song.album?.removeSong(song);
-        for (const person of song.kuenstler) {
-            person.removeSong(song);
-        }
-    }
-
-    const uebrigeSongs = songs.filter((song) => !zuLoeschen.includes(song));
-    songs.splice(0, songs.length, ...uebrigeSongs);
-}
-
-const suchbegriff = "1";
+const suchbegriff = "";
 suchen(suchbegriff);
-
-// Zum Löschen statt der Suche aufrufen:
-// loeschen("Song 1");
